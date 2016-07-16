@@ -1,39 +1,81 @@
-package com.manufacturingplant.logos;
+package com.manufacturingplant.smes.entity;
+
+import javax.persistence.*;
 
 /**
  * Created by VYA on 07.05.2016.
  */
-public class Employee {
 
+@Entity
+
+@NamedQueries({
+        @NamedQuery(name="Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name like :name")
+})
+
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id;
+
+    @Column(length = 20)
     private String name;
+
+    @Column(length = 30)
     private String lastName;
+
+    @Column(length = 30)
     private String midlName;
+
+    @Column(length = 100)
     private String adress;
+
+    @Column(length = 40)
     private String dateOfBirdth;
+
+    @Column(length = 20)
     private String phoneNumber;
-    private String type; // Enginner or worker
+
+    @Column(length = 20)
     private String position;
-    private String workplace; //departament or workshop
+
+//future release
+//    @Column(length = 15)
+//    private String type; // Enginner or worker
+
+//future release
+//    @Column
+//    private String workplace; //departament or workshop
+
+    @Column(length = 10)
     private String startDate;
+
+    @Column
     private int salary;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Users users;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Department department;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Workshop workshop;
+
+
 
     public Employee() {
     }
 
-    public Employee(int id, String name, String lastName,
-                    String midlName, String adress, String dateOfBirdth, String phoneNumber,
-                    String type, String position, String workplace, String startDate, int salary) {
-        this.id = id;
+    public Employee(String name, String lastName,
+                    String midlName, String adress, String dateOfBirdth, String phoneNumber, String position, String startDate, int salary) {
         this.name = name;
         this.lastName = lastName;
         this.midlName = midlName;
         this.adress = adress;
         this.dateOfBirdth = dateOfBirdth;
         this.phoneNumber = phoneNumber;
-        this.type = type;
         this.position = position;
-        this.workplace = workplace;
         this.startDate = startDate;
         this.salary = salary;
     }
@@ -94,28 +136,12 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getPosition() {
+   public String getPosition() {
         return position;
     }
 
     public void setPosition(String position) {
         this.position = position;
-    }
-
-    public String getWorkplace() {
-        return workplace;
-    }
-
-    public void setWorkplace(String workplace) {
-        this.workplace = workplace;
     }
 
     public String getStartDate() {
@@ -134,21 +160,7 @@ public class Employee {
         this.salary = salary;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", midlName='" + midlName + '\'' +
-                ", adress='" + adress + '\'' +
-                ", dateOfBirdth='" + dateOfBirdth + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", type='" + type + '\'' +
-                ", position='" + position + '\'' +
-                ", workplace='" + workplace + '\'' +
-                ", startDate='" + startDate + '\'' +
-                ", salary=" + salary +
-                '}';
-    }
+
+
+
 }
